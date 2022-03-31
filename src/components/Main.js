@@ -1,46 +1,34 @@
 import React from "react";
 import Question from "./Question";
 import { nanoid } from "nanoid";
+import triviaData from "../triviaData";
 
-export default function Main() {
+export default function Main(props) {
+  const [gameState, setGameState] = React.useState({
+    isActive: props.activeGame,
+    totalQuestions: 0,
+    correct: 0,
+  });
+
+  const [allTriviaData, setAllTriviaData] = React.useState(triviaData.results);
+
+  const questionsElements = allTriviaData.map((trivQuest) => (
+    <Question
+      trivia={trivQuest.question}
+      correctAnswer={trivQuest.correct_answer}
+      incorrectAnswerOne={trivQuest.incorrect_answers[0]}
+      incorrectAnswerTwo={trivQuest.incorrect_answers[1]}
+      incorrectAnswerThree={trivQuest.incorrect_answers[2]}
+      key={nanoid()}
+    />
+  ));
+
   return (
     <div className="main-container">
-      <Question
-        trivia="Which best selling toy of 1983 caused hysteria, 
-      resulting in riots breaking in stores?"
-        correctAnswer="yes"
-        incorrectAnswerOne="no"
-        incorrectAnswerTwo="no"
-        incorrectAnswerThree="no"
-      />
-      <Question
-        trivia="How would one say goodbye in Spanish?"
-        correctAnswer="yes"
-        incorrectAnswerOne="no"
-        incorrectAnswerTwo="no"
-        incorrectAnswerThree="no"
-      />
-      <Question
-        trivia="What is the hottest planet in our Solar System?"
-        correctAnswer="yes"
-        incorrectAnswerOne="no"
-        incorrectAnswerTwo="no"
-        incorrectAnswerThree="no"
-      />
-      <Question
-        trivia="In which country was the caesar salad invented?"
-        correctAnswer="yes"
-        incorrectAnswerOne="no"
-        incorrectAnswerTwo="no"
-        incorrectAnswerThree="no"
-      />
-      <Question
-        trivia="How Many Hearts Does An Octopus Have?"
-        correctAnswer="yes"
-        incorrectAnswerOne="no"
-        incorrectAnswerTwo="no"
-        incorrectAnswerThree="no"
-      />
+      {questionsElements}
+      <button className="main-btn-check-answers">
+        <span className="main-btn-check-answers-text">Check answers</span>
+      </button>
     </div>
   );
 }

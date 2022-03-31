@@ -12,7 +12,11 @@ function App() {
 
   return (
     <div className="app-container">
-      {activeGame ? <Main /> : <Start startQuiz={startQuiz} />}
+      {activeGame ? (
+        <Main activeGame={activeGame} />
+      ) : (
+        <Start startQuiz={startQuiz} />
+      )}
     </div>
   );
 }

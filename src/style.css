@@ -42,7 +42,7 @@ body {
 
 .main-btn-check-answers {
   display: block;
-  margin-top: 35px;
+  margin-top: 20px;
   margin-right: auto;
   margin-left: auto;
 }
@@ -97,4 +97,9 @@ body {
 .question-bottom-line {
   margin-top: 20px;
   opacity: 30%;
+}
+
+.main-end-score {
+  text-align: center;
+  color: #293264;
 }

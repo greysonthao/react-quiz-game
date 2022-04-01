@@ -21,21 +21,29 @@ export default function Question(props) {
           value={props.answerOne}
           isHeld={props.answerOneIsHeld}
           holdAnswer={props.holdAnswer}
+          isCorrect={props.answerOneIsCorrect}
+          showAnswerScreen={props.showAnswerScreen}
         />
         <Answer
           value={props.answerTwo}
           isHeld={props.answerTwoIsHeld}
           holdAnswer={props.holdAnswer}
+          isCorrect={props.answerTwoIsCorrect}
+          showAnswerScreen={props.showAnswerScreen}
         />
         <Answer
           value={props.answerThree}
           isHeld={props.answerThreeIsHeld}
           holdAnswer={props.holdAnswer}
+          isCorrect={props.answerThreeIsCorrect}
+          showAnswerScreen={props.showAnswerScreen}
         />
         <Answer
           value={props.answerFour}
           isHeld={props.answerFourIsHeld}
           holdAnswer={props.holdAnswer}
+          isCorrect={props.answerFourIsCorrect}
+          showAnswerScreen={props.showAnswerScreen}
         />
       </div>
       <hr className="question-bottom-line"></hr>

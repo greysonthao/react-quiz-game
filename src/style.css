@@ -6,10 +6,11 @@ body {
   margin: 0;
   font-family: "Karla", sans-serif;
   background-color: #f5f7fb;
-  /* background-image: url(./images/background.png);
-  background-position: center;
-  background-size: 100%;
-  background-repeat: no-repeat; */
+  background-image: url(../src/images/background.png);
+}
+
+.app-container-background {
+  opacity: 0.2;
 }
 
 .start-content-container {
@@ -65,7 +66,7 @@ body {
 }
 
 .main-container {
-  padding: 30px 0;
+  padding: 100px 0;
 }
 
 .question-container {
@@ -74,10 +75,13 @@ body {
 
 .question-question {
   color: #293264;
+  display: flex;
+  justify-content: center;
 }
 
 .question-answer-btns-container {
   display: flex;
+  justify-content: center;
 }
 
 .question-answer-btn {

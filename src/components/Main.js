@@ -10,7 +10,8 @@ export default function Main(props) {
   });
 
   const [allTriviaData, setAllTriviaData] = React.useState(triviaData.results);
-  /*   const [allTriviaData, setAllTriviaData] = React.useState([]);*/
+  /* const [allTriviaData, setAllTriviaData] = React.useState([]); */
+
   const [allQuestionsAndAnswers, setAllQuestionsAndAnswers] = React.useState(
     getQuestionAndAnswers()
   );
@@ -18,6 +19,10 @@ export default function Main(props) {
   const [showCheckAnswersBtn, setShowCheckAnswersBtn] = React.useState(false);
 
   const [showAnswerScreen, setShowAnswerScreen] = React.useState(false);
+
+  /* React.useEffect(() => {
+    setAllQuestionsAndAnswers(getQuestionAndAnswers());
+  }, [allTriviaData]); */
 
   React.useEffect(() => {
     let allQuestionsHaveAnAnswer;
@@ -58,6 +63,7 @@ export default function Main(props) {
   }, [allQuestionsAndAnswers]);
 
   /*   React.useEffect(() => {
+    console.log("fetching");
     fetch(
       "https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple"
     )
@@ -174,6 +180,7 @@ export default function Main(props) {
       correct: 0,
     });
 
+    //TO DO
     setAllTriviaData(triviaData.results);
 
     setAllQuestionsAndAnswers(getQuestionAndAnswers());

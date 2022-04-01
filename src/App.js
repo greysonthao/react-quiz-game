@@ -6,7 +6,6 @@ function App() {
   const [activeGame, setActiveGame] = React.useState(false);
 
   function startQuiz() {
-    console.log("clicked");
     setActiveGame((prevGameState) => !prevGameState);
   }
 

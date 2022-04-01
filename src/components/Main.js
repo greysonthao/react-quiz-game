@@ -1,6 +1,5 @@
 import React from "react";
 import Question from "./Question";
-import { nanoid } from "nanoid";
 import triviaData from "../triviaData";
 
 export default function Main(props) {
@@ -11,7 +10,7 @@ export default function Main(props) {
   });
 
   const [allTriviaData, setAllTriviaData] = React.useState(triviaData.results);
-
+  /*   const [allTriviaData, setAllTriviaData] = React.useState([]);*/
   const [allQuestionsAndAnswers, setAllQuestionsAndAnswers] = React.useState(
     getQuestionAndAnswers()
   );
@@ -56,13 +55,15 @@ export default function Main(props) {
     if (allQuestionsHaveAnAnswer === true) {
       setShowCheckAnswersBtn(true);
     }
-
-    //then show the check answers button
   }, [allQuestionsAndAnswers]);
 
-  //DELETE THESE EVENTUALLY
-  console.log("allQuestionsAndAnswers");
-  console.log(allQuestionsAndAnswers);
+  /*   React.useEffect(() => {
+    fetch(
+      "https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple"
+    )
+      .then((res) => res.json())
+      .then((data) => setAllTriviaData(data.results));
+  }, []); */
 
   function generateAnswer(value) {
     return {
@@ -122,9 +123,6 @@ export default function Main(props) {
   ));
 
   function handleClickAnswer(clickedAnswer) {
-    console.log("clickedAnswer");
-    console.log(clickedAnswer);
-
     let newQAndAsArray = [...allQuestionsAndAnswers];
 
     for (let i = 0; i < newQAndAsArray.length; i++) {
@@ -143,8 +141,6 @@ export default function Main(props) {
   }
 
   function handleCheckAnswersButton() {
-    console.log("Check answers button");
-
     let newQAndAsArray = [...allQuestionsAndAnswers];
 
     let newGameState = gameState;
@@ -186,12 +182,6 @@ export default function Main(props) {
 
     setShowAnswerScreen(false);
   }
-
-  /* 
-
-  const [showCheckAnswersBtn, setShowCheckAnswersBtn] = React.useState(false);
-
-  const [showAnswerScreen, setShowAnswerScreen] = React.useState(false); */
 
   return (
     <div className="main-container">

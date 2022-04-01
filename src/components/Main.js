@@ -80,6 +80,9 @@ export default function Main(props) {
     for (let i = 0; i < newQAndAsArray.length; i++) {
       for (let j = 0; j < newQAndAsArray[0].allAnswers.length; j++) {
         if (clickedAnswer === newQAndAsArray[i].allAnswers[j].value) {
+          for (let k = 0; k < newQAndAsArray[i].allAnswers.length; k++) {
+            newQAndAsArray[i].allAnswers[k].isHeld = false;
+          }
           newQAndAsArray[i].allAnswers[j].isHeld =
             !newQAndAsArray[i].allAnswers[j].isHeld;
         }
@@ -89,62 +92,21 @@ export default function Main(props) {
     setAllQuestionsAndAnswers(newQAndAsArray);
   }
 
+  function handleCheckAnswersButton() {
+    console.log("Check answers button");
+  }
+
   return (
     <div className="main-container">
       {questionsElements}
       <button className="main-btn-check-answers">
-        <span className="main-btn-check-answers-text">Check answers</span>
+        <span
+          className="main-btn-check-answers-text"
+          onClick={handleCheckAnswersButton}
+        >
+          Check answers
+        </span>
       </button>
     </div>
   );
 }
-
-//THIS WORKS
-/* return (
-    <div className="main-container">
-      <Question
-        trivia={allQuestionsAndAnswers[0].triviaQuestion}
-        answerOne={allQuestionsAndAnswers[0].allAnswers[0]}
-        answerTwo={allQuestionsAndAnswers[0].allAnswers[1]}
-        answerThree={allQuestionsAndAnswers[0].allAnswers[2]}
-        answerFour={allQuestionsAndAnswers[0].allAnswers[3]}
-        key={allQuestionsAndAnswers[0].triviaQuestion}
-      />
-      <Question
-        trivia={allQuestionsAndAnswers[1].triviaQuestion}
-        answerOne={allQuestionsAndAnswers[1].allAnswers[0]}
-        answerTwo={allQuestionsAndAnswers[1].allAnswers[1]}
-        answerThree={allQuestionsAndAnswers[1].allAnswers[2]}
-        answerFour={allQuestionsAndAnswers[1].allAnswers[3]}
-        key={allQuestionsAndAnswers[1].triviaQuestion}
-      />
-      <Question
-        trivia={allQuestionsAndAnswers[2].triviaQuestion}
-        answerOne={allQuestionsAndAnswers[2].allAnswers[0]}
-        answerTwo={allQuestionsAndAnswers[2].allAnswers[1]}
-        answerThree={allQuestionsAndAnswers[2].allAnswers[2]}
-        answerFour={allQuestionsAndAnswers[2].allAnswers[3]}
-        key={allQuestionsAndAnswers[2].triviaQuestion}
-      />
-      <Question
-        trivia={allQuestionsAndAnswers[3].triviaQuestion}
-        answerOne={allQuestionsAndAnswers[3].allAnswers[0]}
-        answerTwo={allQuestionsAndAnswers[3].allAnswers[1]}
-        answerThree={allQuestionsAndAnswers[3].allAnswers[2]}
-        answerFour={allQuestionsAndAnswers[3].allAnswers[3]}
-        key={allQuestionsAndAnswers[3].triviaQuestion}
-      />
-      <Question
-        trivia={allQuestionsAndAnswers[4].triviaQuestion}
-        answerOne={allQuestionsAndAnswers[4].allAnswers[0]}
-        answerTwo={allQuestionsAndAnswers[4].allAnswers[1]}
-        answerThree={allQuestionsAndAnswers[4].allAnswers[2]}
-        answerFour={allQuestionsAndAnswers[4].allAnswers[3]}
-        key={allQuestionsAndAnswers[4].triviaQuestion}
-      />
-      <button className="main-btn-check-answers">
-        <span className="main-btn-check-answers-text">Check answers</span>
-      </button>
-    </div>
-  );
-} */

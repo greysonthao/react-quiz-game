@@ -47,7 +47,9 @@ body {
   margin-left: auto;
 }
 
-.start-btn:active {
+.start-btn:active,
+.main-btn-check-answers:active,
+.question-answer-btn:active {
   transform: scale(0.98);
   box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
 }
@@ -70,6 +72,10 @@ body {
   padding: 0 44px;
 }
 
+.question-question {
+  color: #293264;
+}
+
 .question-answer-btns-container {
   display: flex;
 }
@@ -78,7 +84,6 @@ body {
   width: 90px;
   height: 40px;
   border: 0.771045px solid #4d5b9e;
-  background: white;
   box-sizing: border-box;
   border-radius: 7.71045px;
   margin-right: 13px;
@@ -86,6 +91,7 @@ body {
   font-size: 11px;
   text-align: center;
   color: #293264;
+  cursor: pointer;
 }
 
 .question-bottom-line {

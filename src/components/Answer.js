@@ -7,7 +7,7 @@ export default function Answer(props) {
 
   let stylesAfter = {};
 
-  if (props.isCorrect) {
+  if (props.isCorrect || props.correctAnswer === props.value) {
     stylesAfter = {
       backgroundColor: "#94d7a2",
     };

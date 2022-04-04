@@ -1,5 +1,6 @@
 import React from "react";
 import Question from "./Question";
+import entities from "entities";
 
 export default function Main(props) {
   const [gameState, setGameState] = React.useState({
@@ -19,6 +20,8 @@ export default function Main(props) {
   const [showAnswerScreen, setShowAnswerScreen] = React.useState(false);
 
   const [newGame, setNewGame] = React.useState(false);
+
+  const entities = require("entities");
 
   React.useEffect(() => {
     fetchTheData();
@@ -53,6 +56,11 @@ export default function Main(props) {
     allAnswers.push(generateAnswer(allTriviaData[i].incorrect_answers[0]));
     allAnswers.push(generateAnswer(allTriviaData[i].incorrect_answers[1]));
     allAnswers.push(generateAnswer(allTriviaData[i].incorrect_answers[2]));
+
+    allAnswers.map((ans) => entities.decodeHTML(ans.value));
+
+    allAnswers.map((ans) => entities.decodeXML(ans.value));
+
     return allAnswers.sort(() => Math.random() - 0.5);
   }
 
@@ -61,8 +69,8 @@ export default function Main(props) {
 
     for (let i = 0; i < allTriviaData.length; i++) {
       let qAndAs = {
-        triviaQuestion: allTriviaData[i].question,
-        correctAnswer: allTriviaData[i].correct_answer,
+        triviaQuestion: entities.decodeHTML(allTriviaData[i].question),
+        correctAnswer: entities.decodeHTML(allTriviaData[i].correct_answer),
         allAnswers: shuffleAnswers(allTriviaData, i),
       };
       qAndAsArray.push(qAndAs);

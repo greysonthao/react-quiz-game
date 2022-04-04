@@ -6,7 +6,7 @@ export default function Start(props) {
       <div className="start-content-container">
         <h1 className="start-title">Quizzical</h1>
         <p className="start-description">
-          Play Quizzical to test your triva knowledge!
+          Play Quizzical to test your triva knowledge about animals!
         </p>
         <button className="start-btn">
           <span className="start-btn-text" onClick={props.startQuiz}>

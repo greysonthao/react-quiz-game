@@ -1,21 +1,33 @@
 import React from "react";
 
 export default function Answer(props) {
-  let styles1 = {
+  let stylesBefore = {
     backgroundColor: props.isHeld ? "#D6DBF5" : "white",
   };
 
-  let styles2 = {
-    backgroundColor: props.isHeld && props.isCorrect ? "#94d7a2" : "#F8BCBC",
-  };
+  let stylesAfter = {};
+
+  if (props.isCorrect) {
+    stylesAfter = {
+      backgroundColor: "#94d7a2",
+    };
+  } else if (props.isHeld && !props.isCorrect) {
+    stylesAfter = {
+      backgroundColor: "#f8bcbc",
+    };
+  } else {
+    stylesAfter = {
+      backgroundColor: "white",
+      opacity: 0.5,
+    };
+  }
 
   return (
     <div>
       <button
         className="question-answer-btn"
         onClick={() => props.holdAnswer(props.value)}
-        /* style={props.showAnswerScreen ? `${styles1}` : `${styles2}`} */
-        style={styles1}
+        style={!props.showAnswerScreen ? stylesBefore : stylesAfter}
       >
         {props.value}
       </button>

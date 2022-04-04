@@ -14,7 +14,7 @@ body {
 }
 
 .start-content-container {
-  padding-top: 300px;
+  padding-top: 200px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -66,7 +66,7 @@ body {
 }
 
 .main-container {
-  padding: 100px 0;
+  padding: 40px 0;
 }
 
 .question-container {

@@ -23,6 +23,7 @@ export default function Question(props) {
           holdAnswer={props.holdAnswer}
           isCorrect={props.answerOneIsCorrect}
           showAnswerScreen={props.showAnswerScreen}
+          correctAnswer={props.correctAnswer}
         />
         <Answer
           value={props.answerTwo}
@@ -30,6 +31,7 @@ export default function Question(props) {
           holdAnswer={props.holdAnswer}
           isCorrect={props.answerTwoIsCorrect}
           showAnswerScreen={props.showAnswerScreen}
+          correctAnswer={props.correctAnswer}
         />
         <Answer
           value={props.answerThree}
@@ -37,6 +39,7 @@ export default function Question(props) {
           holdAnswer={props.holdAnswer}
           isCorrect={props.answerThreeIsCorrect}
           showAnswerScreen={props.showAnswerScreen}
+          correctAnswer={props.correctAnswer}
         />
         <Answer
           value={props.answerFour}
@@ -44,6 +47,7 @@ export default function Question(props) {
           holdAnswer={props.holdAnswer}
           isCorrect={props.answerFourIsCorrect}
           showAnswerScreen={props.showAnswerScreen}
+          correctAnswer={props.correctAnswer}
         />
       </div>
       <hr className="question-bottom-line"></hr>

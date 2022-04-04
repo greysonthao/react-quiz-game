@@ -1,6 +1,5 @@
 import React from "react";
 import Question from "./Question";
-import triviaData from "../triviaData";
 
 export default function Main(props) {
   const [gameState, setGameState] = React.useState({
@@ -9,67 +8,115 @@ export default function Main(props) {
     correct: 0,
   });
 
-  const [allTriviaData, setAllTriviaData] = React.useState(triviaData.results);
-  /* const [allTriviaData, setAllTriviaData] = React.useState([]); */
+  const [allTriviaData, setAllTriviaData] = React.useState([]);
+
+  const [allDataIsHere, setAllDataIsHere] = React.useState(false);
 
   const [allQuestionsAndAnswers, setAllQuestionsAndAnswers] = React.useState(
-    getQuestionAndAnswers()
+    []
   );
 
   const [showCheckAnswersBtn, setShowCheckAnswersBtn] = React.useState(false);
 
   const [showAnswerScreen, setShowAnswerScreen] = React.useState(false);
 
-  /* React.useEffect(() => {
-    setAllQuestionsAndAnswers(getQuestionAndAnswers());
-  }, [allTriviaData]); */
+  const [newGame, setNewGame] = React.useState(false);
 
   React.useEffect(() => {
-    let allQuestionsHaveAnAnswer;
+    fetchTheData();
+  }, []);
 
-    let newQAndAsArray = [...allQuestionsAndAnswers];
-
-    let questionOneYes = newQAndAsArray[0].allAnswers.some(
-      (answer) => answer.isHeld === true
-    );
-    let questionTwoYes = newQAndAsArray[1].allAnswers.some(
-      (answer) => answer.isHeld === true
-    );
-    let questionThreeYes = newQAndAsArray[2].allAnswers.some(
-      (answer) => answer.isHeld === true
-    );
-    let questionFourYes = newQAndAsArray[3].allAnswers.some(
-      (answer) => answer.isHeld === true
-    );
-    let questionFiveYes = newQAndAsArray[4].allAnswers.some(
-      (answer) => answer.isHeld === true
-    );
-
-    if (
-      questionOneYes === true &&
-      questionTwoYes === true &&
-      questionThreeYes === true &&
-      questionFourYes === true &&
-      questionFiveYes === true
-    ) {
-      allQuestionsHaveAnAnswer = true;
-    } else {
-      allQuestionsHaveAnAnswer = false;
-    }
-
-    if (allQuestionsHaveAnAnswer === true) {
-      setShowCheckAnswersBtn(true);
-    }
-  }, [allQuestionsAndAnswers]);
-
-  /*   React.useEffect(() => {
-    console.log("fetching");
+  function fetchTheData() {
     fetch(
       "https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple"
     )
       .then((res) => res.json())
       .then((data) => setAllTriviaData(data.results));
+    /* .then((data) => console.log(data.results));  */
+  }
+
+  /*   function fetchTheData() {
+    const fetchData = async () => {
+      const res = await fetch(
+        "https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple"
+      );
+      const data = await res.json();
+      console.log("data.results");
+      console.log(data.results);
+      setAllTriviaData(data.results); // set state with trivia data, processData is a helper function
+    };
+    fetchData().catch(console.error);
+  } */
+
+  /*   React.useEffect(function () {
+    fetchTheData();
   }, []); */
+
+  /*  React.useEffect(() => {
+    console.log("fetching");
+    fetch(DATA_URL)
+      .then((res) => res.json())
+      .then((data) => setAllTriviaData(data.results));
+     .then((data) => console.log(data.results)); 
+  }, []); */
+
+  React.useEffect(() => {
+    if (allTriviaData.length > 0) {
+      setAllDataIsHere(true);
+    }
+  }, [allTriviaData]);
+
+  React.useEffect(() => {
+    if (allDataIsHere === true) {
+    }
+    setAllQuestionsAndAnswers(getQuestionAndAnswers());
+  }, [allDataIsHere]);
+
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  React.useEffect(() => {
+    sleep(1500).then(() => {
+      let allQuestionsHaveAnAnswer;
+
+      let newQAndAsArray = [...allQuestionsAndAnswers];
+      console.log("newQAndAsArray");
+      console.log(newQAndAsArray);
+
+      let questionOneYes = newQAndAsArray[0].allAnswers.some(
+        (answer) => answer.isHeld === true
+      );
+      let questionTwoYes = newQAndAsArray[1].allAnswers.some(
+        (answer) => answer.isHeld === true
+      );
+      let questionThreeYes = newQAndAsArray[2].allAnswers.some(
+        (answer) => answer.isHeld === true
+      );
+      let questionFourYes = newQAndAsArray[3].allAnswers.some(
+        (answer) => answer.isHeld === true
+      );
+      let questionFiveYes = newQAndAsArray[4].allAnswers.some(
+        (answer) => answer.isHeld === true
+      );
+
+      if (
+        questionOneYes === true &&
+        questionTwoYes === true &&
+        questionThreeYes === true &&
+        questionFourYes === true &&
+        questionFiveYes === true
+      ) {
+        allQuestionsHaveAnAnswer = true;
+      } else {
+        allQuestionsHaveAnAnswer = false;
+      }
+
+      if (allQuestionsHaveAnAnswer === true) {
+        setShowCheckAnswersBtn(true);
+      }
+    }, [allQuestionsAndAnswers]);
+  });
 
   function generateAnswer(value) {
     return {
@@ -79,6 +126,17 @@ export default function Main(props) {
     };
   }
 
+  function shuffleAnswers(allTriviaData, i) {
+    let allAnswers = [];
+
+    allAnswers.push(generateAnswer(allTriviaData[i].correct_answer));
+    allAnswers.push(generateAnswer(allTriviaData[i].incorrect_answers[0]));
+    allAnswers.push(generateAnswer(allTriviaData[i].incorrect_answers[1]));
+    allAnswers.push(generateAnswer(allTriviaData[i].incorrect_answers[2]));
+
+    return allAnswers.sort(() => Math.random() - 0.5);
+  }
+
   function getQuestionAndAnswers() {
     let qAndAsArray = [];
 
@@ -86,12 +144,7 @@ export default function Main(props) {
       let qAndAs = {
         triviaQuestion: allTriviaData[i].question,
         correctAnswer: allTriviaData[i].correct_answer,
-        allAnswers: [
-          generateAnswer(allTriviaData[i].correct_answer),
-          generateAnswer(allTriviaData[i].incorrect_answers[0]),
-          generateAnswer(allTriviaData[i].incorrect_answers[1]),
-          generateAnswer(allTriviaData[i].incorrect_answers[2]),
-        ],
+        allAnswers: shuffleAnswers(allTriviaData, i),
       };
       qAndAsArray.push(qAndAs);
     }
@@ -106,27 +159,33 @@ export default function Main(props) {
     return randNum;
   } */
 
-  const questionsElements = allQuestionsAndAnswers.map((qAndAs) => (
-    <Question
-      trivia={qAndAs.triviaQuestion}
-      answerOne={qAndAs.allAnswers[0].value}
-      answerOneIsHeld={qAndAs.allAnswers[0].isHeld}
-      answerOneIsCorrect={qAndAs.allAnswers[0].isCorrect}
-      answerTwo={qAndAs.allAnswers[1].value}
-      answerTwoIsHeld={qAndAs.allAnswers[1].isHeld}
-      answerTwoIsCorrect={qAndAs.allAnswers[1].isCorrect}
-      answerThree={qAndAs.allAnswers[2].value}
-      answerThreeIsHeld={qAndAs.allAnswers[2].isHeld}
-      answerThreeIsCorrect={qAndAs.allAnswers[2].isCorrect}
-      answerFour={qAndAs.allAnswers[3].value}
-      answerFourIsHeld={qAndAs.allAnswers[3].isHeld}
-      answerFourIsCorrect={qAndAs.allAnswers[3].isCorrect}
-      key={qAndAs.triviaQuestion}
-      allQAndAs={qAndAs}
-      holdAnswer={handleClickAnswer}
-      showAnswerScreen={showAnswerScreen}
-    />
-  ));
+  const questionsElements =
+    allTriviaData.length > 0 ? (
+      allQuestionsAndAnswers.map((qAndAs) => (
+        <Question
+          trivia={qAndAs.triviaQuestion}
+          answerOne={qAndAs.allAnswers[0].value}
+          correctAnswer={qAndAs.allAnswers[0].correctAnswer}
+          answerOneIsHeld={qAndAs.allAnswers[0].isHeld}
+          answerOneIsCorrect={qAndAs.allAnswers[0].isCorrect}
+          answerTwo={qAndAs.allAnswers[1].value}
+          answerTwoIsHeld={qAndAs.allAnswers[1].isHeld}
+          answerTwoIsCorrect={qAndAs.allAnswers[1].isCorrect}
+          answerThree={qAndAs.allAnswers[2].value}
+          answerThreeIsHeld={qAndAs.allAnswers[2].isHeld}
+          answerThreeIsCorrect={qAndAs.allAnswers[2].isCorrect}
+          answerFour={qAndAs.allAnswers[3].value}
+          answerFourIsHeld={qAndAs.allAnswers[3].isHeld}
+          answerFourIsCorrect={qAndAs.allAnswers[3].isCorrect}
+          key={qAndAs.triviaQuestion}
+          allQAndAs={qAndAs}
+          holdAnswer={handleClickAnswer}
+          showAnswerScreen={showAnswerScreen}
+        />
+      ))
+    ) : (
+      <p></p>
+    );
 
   function handleClickAnswer(clickedAnswer) {
     let newQAndAsArray = [...allQuestionsAndAnswers];
@@ -175,45 +234,50 @@ export default function Main(props) {
 
   function handleNewGameButton() {
     setGameState({
-      isActive: props.activeGame,
+      isActive: props.isActive,
       totalQuestions: 0,
       correct: 0,
     });
 
-    //TO DO
-    setAllTriviaData(triviaData.results);
+    setShowCheckAnswersBtn(false);
+
+    setAllDataIsHere(false);
+
+    setAllTriviaData(fetchTheData());
 
     setAllQuestionsAndAnswers(getQuestionAndAnswers());
-
-    setShowCheckAnswersBtn(false);
 
     setShowAnswerScreen(false);
   }
 
-  return (
-    <div className="main-container">
-      {questionsElements}
-      {showAnswerScreen && (
-        <h2 className="main-end-score">
-          You got {gameState.correct}/{gameState.totalQuestions} correct.
-        </h2>
-      )}
-      {showAnswerScreen && (
-        <button
-          className="main-btn-check-answers"
-          onClick={handleNewGameButton}
-        >
-          <span className="main-btn-check-answers-text">New Game</span>
-        </button>
-      )}
-      {showCheckAnswersBtn && !showAnswerScreen && (
-        <button
-          className="main-btn-check-answers"
-          onClick={handleCheckAnswersButton}
-        >
-          <span className="main-btn-check-answers-text">Check answers</span>
-        </button>
-      )}
-    </div>
-  );
+  if (allTriviaData.length > 0) {
+    return (
+      <div className="main-container">
+        {questionsElements}
+        {showAnswerScreen && (
+          <h2 className="main-end-score">
+            You got {gameState.correct}/{gameState.totalQuestions} correct.
+          </h2>
+        )}
+        {showAnswerScreen && (
+          <button
+            className="main-btn-check-answers"
+            onClick={handleNewGameButton}
+          >
+            <span className="main-btn-check-answers-text">New Game</span>
+          </button>
+        )}
+        {showCheckAnswersBtn && !showAnswerScreen && (
+          <button
+            className="main-btn-check-answers"
+            onClick={handleCheckAnswersButton}
+          >
+            <span className="main-btn-check-answers-text">Check answers</span>
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  return <div></div>;
 }

@@ -77,6 +77,7 @@ body {
   color: #293264;
   display: flex;
   justify-content: center;
+  text-align: center;
 }
 
 .question-answer-btns-container {

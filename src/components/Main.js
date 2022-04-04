@@ -43,7 +43,7 @@ export default function Main(props) {
 
   function generateAnswer(value) {
     return {
-      value: value,
+      value: entities.decodeHTML(value),
       isHeld: false,
       isCorrect: false,
     };
@@ -56,10 +56,6 @@ export default function Main(props) {
     allAnswers.push(generateAnswer(allTriviaData[i].incorrect_answers[0]));
     allAnswers.push(generateAnswer(allTriviaData[i].incorrect_answers[1]));
     allAnswers.push(generateAnswer(allTriviaData[i].incorrect_answers[2]));
-
-    allAnswers.map((ans) => entities.decodeHTML(ans.value));
-
-    allAnswers.map((ans) => entities.decodeXML(ans.value));
 
     return allAnswers.sort(() => Math.random() - 0.5);
   }
